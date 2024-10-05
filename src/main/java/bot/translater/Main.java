@@ -8,7 +8,7 @@ import com.pengrad.telegrambot.model.Update;
 import java.io.IOException;
 
 public class Main {
-    private final static TelegramBot telegramBot = new TelegramBot("7474179192:AAFHZjuFrL-eb2mVRO-nImOZXIxwlPRxlXA");
+    private final static TelegramBot telegramBot = new TelegramBot("YOUR_BOT_TOKEN");
     private final static TelegramHandler telegramHandler = new TelegramHandler(telegramBot, new FileService(),new Translator());
 
     public static void main(String[] args) {
