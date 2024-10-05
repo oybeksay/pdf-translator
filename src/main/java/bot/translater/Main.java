@@ -9,13 +9,13 @@ import java.io.IOException;
 
 public class Main {
     private final static TelegramBot telegramBot = new TelegramBot("7474179192:AAFHZjuFrL-eb2mVRO-nImOZXIxwlPRxlXA");
-    private final static TelegramHandler telegramHandler = new TelegramHandler(telegramBot, new FileService());
+    private final static TelegramHandler telegramHandler = new TelegramHandler(telegramBot, new FileService(),new Translator());
 
     public static void main(String[] args) {
         telegramBot.setUpdatesListener(updates -> {
             for (Update update : updates) {
                 try {
-                    telegramHandler.documentHandler(update);
+                    telegramHandler.handleDocument(update);
                 } catch (IOException | DocumentException | InterruptedException e) {
                     e.printStackTrace();
                 }
