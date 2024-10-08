@@ -1,50 +1,23 @@
-# flyctl launch added from .gitignore
-**\target
-!**\.mvn\wrapper\maven-wrapper.jar
-!**\**\src\main\**\target
-!**\**\src\test\**\target
+# Official Maven image
+FROM maven:3.8.1-jdk-11-slim AS build
 
-### IntelliJ IDEA ###
-**\.idea\modules.xml
-**\.idea\jarRepositories.xml
-**\.idea\compiler.xml
-**\.idea\libraries
-**\*.iws
-**\*.iml
-**\*.ipr
+# Copy the project files to the container
+COPY . .
 
-### Eclipse ###
-**\.apt_generated
-**\.classpath
-**\.factorypath
-**\.project
-**\.settings
-**\.springBeans
-**\.sts4-cache
+# Build the project using Maven
+RUN mvn clean install
 
-### NetBeans ###
-nbproject\private
-nbbuild
-dist
-nbdist
-.nb-gradle
-**\build
-!**\**\src\main\**\build
-!**\**\src\test\**\build
+# Package stage: use an official OpenJDK runtime
+FROM openjdk:11-jre-slim
 
-### VS Code ###
-**\.vscode
+# Set the working directory
+WORKDIR /app
 
-### Mac OS ###
-**\.DS_Store
+# Copy the built JAR file from the build image
+COPY --from=build /app/target/*.jar /app/app.jar
 
-# flyctl launch added from .idea\.gitignore
-# Default ignored files
-.idea\shelf
-.idea\workspace.xml
-# Editor-based HTTP Client requests
-.idea\httpRequests
-# Datasource local storage ignored files
-.idea\dataSources
-.idea\dataSources.local.xml
-fly.toml
+# Expose the port on which the app runs
+EXPOSE 8080
+
+# Run the application
+CMD ["java", "-jar", "/app/app.jar"]
