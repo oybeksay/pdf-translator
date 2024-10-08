@@ -3,7 +3,6 @@ package bot.translater;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.net.URI;
